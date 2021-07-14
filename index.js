@@ -83,15 +83,12 @@ console.log('Working on Books Array !!!');
 const budget = 20;
 const hoursToRead = 7;
 const readSpeedInMinute = 250;
-const avgWordsPerPage = 300;
 const minutesToRead = hoursToRead * 60;
-const totalWordsToRead = readSpeedInMinute * minutesToRead;
 
 let fictionArr = [];
 let generatedArr = [];
 let counter = 0;
-
-console.log(totalWordsToRead);
+let totalWordsToRead = readSpeedInMinute * minutesToRead;
 
 for (let book of books) {
   if (book.category === 'fiction') {
@@ -103,15 +100,15 @@ fictionArr = fictionArr.sort(
   (fistEl, secondEl) => fistEl.price - secondEl.price
 );
 
-console.log(fictionArr);
-
 for (let book of fictionArr) {
-  if (budget < counter && totalWordsToRead < 0) {
+  counter += book.price;
+  totalWordsToRead -= book.pages * readSpeedInMinute;
+
+  if (budget < counter || totalWordsToRead < 0) {
     break;
   }
   generatedArr.push(book);
-  counter += book.price;
-  totalWordsToRead -= book.pages * avgWordsPerPage;
 }
 
-console.log('Geeshvi sheni ');
+console.log(`Books to read: `);
+console.log(generatedArr);
